@@ -2,7 +2,7 @@
 <div class="row">
     <h1 class="text-center">Edit Campground</h1>
     <div class="col-6 offset-3">
-        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form">
+        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="title">Title</label>
                 <input class="form-control" type="text" id="title" name="campground[title]"
@@ -20,12 +20,10 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="image">Image Url</label>
-                <input class="form-control" type="text" id="image" name="campground[image]"
-                    value="<%=campground.image %>" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
+                <label for="image" class="form-label">
+                    <span class="form-file-text">Upload images</span>
+                </label>
+                <input class="form-control" type="file" id="image" name="image" multiple>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="price">Campground Price</label>
@@ -48,6 +46,15 @@
                 </div>
             </div>
             <div class="mb-3">
+                <% campground.images.forEach(function(img, i){ %> 
+                    <img src="<%=img.thumbnail%>" class="img-thumbnail" alt=""> 
+                    <div class="form-check-inline">
+                        <input type="checkbox" name="deleteImages[]" id="image-<%=i%>" value="<%=img.filename%>">
+                    </div>
+                    <label for="image-<%=i%>">Delete?</label>
+                    <% }) %> 
+            </div>
+            <div class="mb-3">
                 <button class="btn btn-info">Update Campground</button>
             </div>
         </form>
@@ -55,3 +62,6 @@
 
     </div>
 </div>
+
+https://res.cloudinary.com/exzon/image/upload/c_thumb,w_200,g_face/v1619312647/StarCamp/yltazhayjanyt2965mjn.jpg
+https://res.cloudinary.com/exzon/image/upload/c_thumb,w_200,g_face/v1619382936/StarCamp/yltazhayjanyt2965mjn.jpg

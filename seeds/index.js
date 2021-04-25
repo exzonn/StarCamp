@@ -24,9 +24,14 @@ const seedDB = async () => {
             author: '60842ec9eadff13c0c1aa67c',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(places)} ${sample(descriptors)}`,
-            image: 'https://source.unsplash.com/collection/483251',
             description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Beatae porro animi commodi accusantium laborum, eaque nobis, eum distinctio laboriosam similique possimus repellendus et doloremque fugiat non ratione sunt officia iste!',
-            price 
+            price, 
+            images: [
+                {
+                  url: 'https://res.cloudinary.com/exzon/image/upload/v1619382936/StarCamp/yltazhayjanyt2965mjn.jpg',
+                  filename: 'StarCamp/yltazhayjanyt2965mjn'
+                }
+              ],
         })
         await camp.save();
     }
