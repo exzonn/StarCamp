@@ -25,13 +25,17 @@ const seedDB = async () => {
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(places)} ${sample(descriptors)}`,
             description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Beatae porro animi commodi accusantium laborum, eaque nobis, eum distinctio laboriosam similique possimus repellendus et doloremque fugiat non ratione sunt officia iste!',
-            price, 
+            price,
+            geometry: {
+                type: "Point",
+                coordinates: [-75.5663, 39.6621]
+            },
             images: [
                 {
-                  url: 'https://res.cloudinary.com/exzon/image/upload/v1619382936/StarCamp/yltazhayjanyt2965mjn.jpg',
-                  filename: 'StarCamp/yltazhayjanyt2965mjn'
+                    url: 'https://res.cloudinary.com/exzon/image/upload/v1619382936/StarCamp/yltazhayjanyt2965mjn.jpg',
+                    filename: 'StarCamp/yltazhayjanyt2965mjn'
                 }
-              ],
+            ],
         })
         await camp.save();
     }
