@@ -7,7 +7,7 @@ const map = new mapboxgl.Map({
     center: campground.geometry.coordinates, //-75.5663, 39.6621
     zoom: 8
     });
-
+map.addControl(new mapboxgl.NavigationControl());
 const marker = new mapboxgl.Marker({ color: 'black'})
 .setLngLat(campground.geometry.coordinates)
 .setPopup(
