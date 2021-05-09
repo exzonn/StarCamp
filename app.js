@@ -30,12 +30,12 @@ mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
     useFindAndModify: false
 });
-console.log(dbUrl)
+
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
-})
+});
 const app = express();
 
 app.engine('ejs', ejsMate);
@@ -57,20 +57,18 @@ store.on('error', function(e){
     console.log('store error', e)
 })
 
-app.use(session({
-    store,
-    name: "session",
-    secret,
+const sessionConfig = {
+    secret: 'NikolaTesla',
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        //secure: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //in ms
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
-}));
+}
 
+app.use(session(sessionConfig))
 app.use(flash());
 app.use(helmet());
 
