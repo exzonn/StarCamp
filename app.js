@@ -21,8 +21,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./routes/user');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/starcamp';
-//
+const dbUrl = 'mongodb://localhost:27017/starcamp';
+//process.env.DB_URL ||
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -148,7 +148,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err });
 });
 //
-const port = process.env.PORT || 3000;
+const port = 3000;
+// ||process.env.PORT 
 app.listen(port, () => {
     console.log(`Hosting on port ${port}`);
 });
