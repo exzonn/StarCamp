@@ -22,13 +22,15 @@ const userRoutes = require('./routes/user');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/starcamp';
+//
+
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
 });
-
+console.log(dbUrl)
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -63,7 +65,7 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        //secure: true,
+        secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -146,6 +148,7 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = 'Someting Went Wrong!';
     res.status(statusCode).render('error', { err });
 });
+//
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Hosting on port ${port}`);
