@@ -57,20 +57,20 @@ store.on('error', function(e){
     console.log('store error', e)
 })
 
-const sessionConfig = {
+app.use(session({
     store,
-    name: 'session',
+    name: "session",
     secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
         secure: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //in ms
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
-}
-app.use(session(sessionConfig));
+}));
+
 app.use(flash());
 app.use(helmet());
 
