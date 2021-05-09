@@ -14,14 +14,15 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./models/user');
 const helmet = require('helmet');
+const MongoStore = require('connect-mongo');
 
 const mongoSanitize = require('express-mongo-sanitize');
 
 const userRoutes = require('./routes/user');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-
-mongoose.connect('mongodb://localhost:27017/starcamp', {
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/starcamp';
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -42,16 +43,27 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(mongoSanitize({replaceWith: '_'}));
+app.use(mongoSanitize({ replaceWith: '_' }));
+
+const secret = process.env.SECRET || 'NikolaTesla';
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    secret,
+    touchAfter: 24 * 60 * 60
+})
+store.on('error', function(e){
+    console.log('store error', e)
+})
 
 const sessionConfig = {
+    store,
     name: 'session',
-    secret: 'thisisasecret',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        secure: true,
+        //secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
