@@ -33,9 +33,25 @@
             </div>
         </div>
         <% } %>
-
+        <nav aria-label="switchPage">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="/campgrounds/?page=<%= pages - 1%>">Previous</a>
+                </li>
+              <li class="page-item active"><a class="page-link" href="/campgrounds/?page=<%= pages %>"><%= pages %></a></li>
+              <% if(pages < totalPages){ %> 
+              <li class="page-item"><a class="page-link" href="/campgrounds/?page=<%= pages + 1%>"><%= pages + 1 %></a></li>             
+              <% if(pages !== totalPages - 1){ %><li class="page-item"><a class="page-link" href="/campgrounds/?page=<%= pages + 2%>"><%= pages + 2 %></a></li><% } %>
+              <% } %> 
+              <li class="page-item <%if(pages===totalPages){%>disabled<%}%>">
+                <a class="page-link" href="/campgrounds/?page=<%= pages + 1%>">Next</a>
+              </li>
+            </ul>
+          </nav>
             <script>
             const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
             const campgrounds = {features: <%-JSON.stringify(campgrounds)%>}
+            const pages = {features: <%-JSON.stringify(Number(pages))%>}
+            const totalPages = {features: <%-JSON.stringify(Number(totalPages))%>}
             </script>
             <script src="/scripts/clusterMap.js"></script>

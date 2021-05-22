@@ -4,9 +4,10 @@ if (process.env.NODE_ENV !== "production") {
 
 const mongoose = require('mongoose');
 const cities = require('./cities');
-const { places, descriptors } = require('./seedHelpers');
+const { places, descriptors, getDate } = require('./seedHelpers');
 const Campground = require('../models/campground');
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/starcamp';
+const dbUrl = 'mongodb://localhost:27017/starcamp';
+//process.env.DB_URL ||
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -25,12 +26,16 @@ const seedDB = async () => {
     for (let i = 0; i < 300; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 30) + 10;
+        function randomFunc(arr){
+            return arr[Math.floor(Math.random()*arr.length)];
+          }
         const camp = new Campground({
-            author: '6098464299426d00150e470f',
+            author: '60842ec9eadff13c0c1aa67c', //6098464299426d00150e470f
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(places)} ${sample(descriptors)}`,
-            description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Beatae porro animi commodi accusantium laborum, eaque nobis, eum distinctio laboriosam similique possimus repellendus et doloremque fugiat non ratione sunt officia iste!',
+            description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.Beatae porro animi commodi accusantium laborum, eaque nobis, eum distinctio laboriosam similique possimus repellendus et doloremque fugiat non ratione sunt officia iste!Lorem ipsum dolor sit amet consectetur, adipisicing elit.Beatae porro animi commodi accusantium laborum, eaque nobis, eum distinctio laboriosam similique possimus repellendus et doloremque fugiat non ratione sunt officia iste!',
             price,
+            postDate: `${randomFunc(getDate.postMonth)} ${randomFunc(getDate.postDay)} ${randomFunc(getDate.postYear)}`,
             geometry: {
                 type: "Point",
                 coordinates: [

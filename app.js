@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -21,8 +20,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./routes/user');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/starcamp';
-
+const dbUrl = 'mongodb://localhost:27017/starcamp';
+//process.env.DB_URL || 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -52,7 +51,7 @@ const store = MongoStore.create({
     secret,
     touchAfter: 24 * 60 * 60
 })
-store.on('error', function(e){
+store.on('error', function (e) {
     console.log('store error', e)
 })
 
@@ -135,9 +134,10 @@ app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes);
 
 app.get('/', (req, res) => {
-    res.render('home');
+    if (req.isAuthenticated()) {
+        return res.redirect('/campgrounds');
+    } res.render('home');
 })
-
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404));
 });
@@ -146,8 +146,8 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = 'Someting Went Wrong!';
     res.status(statusCode).render('error', { err });
 });
-//
-const port = process.env.PORT || 3000;
+//process.env.PORT || 
+const port = 3000;
 app.listen(port, () => {
     console.log(`Hosting on port ${port}`);
 });

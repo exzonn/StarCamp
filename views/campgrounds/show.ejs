@@ -1,7 +1,7 @@
 <% layout('layout/boilerplate') %>
     <link rel="stylesheet" href="/stylesheets/stars.css">
     <div class="row">
-        <div class="col-6 mb-3">
+        <div class="col-md-6 mb-3">
             <div id="map"></div>
             <div id="campgroundCarusel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -25,13 +25,15 @@
                     <% } %>
             </div>
             <div class="card w-100" style="width: 18rem;">
-                <div class="card-body">
+                <div class="card-body" id="showPageCard">
                     <h5 class="card-title">
                         <%= campground.title %>
                     </h5>
-                    <p class="card-text">
+                    <p class="card-text collapse" id="showPageCollapse" aria-expanded="false">
                         <%= campground.description %>
                     </p>
+                    <a class="collapsed text-decoration-none" data-bs-toggle="collapse" href="#showPageCollapse" role="button" aria-expanded="false" aria-controls="showPageCollapse">
+                      </a>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item text-muted">
@@ -50,7 +52,7 @@
                         </form>
                     </div>
                     <% } %>
-                        <div class="card-footer text-muted">2 days ago</div>
+                        <div class="card-footer text-muted"><%= campground.postDate %></div>
             </div>
         </div>
         <div class="col-6">

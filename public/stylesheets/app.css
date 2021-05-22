@@ -1,8 +1,27 @@
-#cluster-map{
-    width: 100%;
-    height: 500px;
+#cluster-map {
+  width: 100%;
+  height: 500px;
 }
-#map{
-    width: 100%;
-    height: 300px;
+
+#map {
+  width: 100%;
+  height: 300px;
+}
+
+#showPageCard #showPageCollapse.collapse:not(.show) {
+  display: block;
+  height: 3rem;
+  overflow: hidden;
+}
+
+#showPageCard #showPageCollapse.collapsing {
+  height: 3rem;
+}
+
+#showPageCard a.collapsed::after {
+  content: 'Show More';
+}
+
+#showPageCard a:not(.collapsed)::after {
+  content: 'Show Less';
 }
