@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors, getDate } = require('./seedHelpers');
 const Campground = require('../models/campground');
-const dbUrl = 'mongodb://localhost:27017/starcamp';
-//process.env.DB_URL ||
+const dbUrl = 'process.env.DB_URL || mongodb://localhost:27017/starcamp';
+//
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
